@@ -1,0 +1,41 @@
+<h1 class="intro"> Sign our petition...</h1>
+<main>
+    <form action="/petition" method="POST">
+        <section>
+            <div class="field">
+                <label for="first_name">First Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="first_name"
+                    required
+                    id="first_name"
+                />
+            </div>
+
+            <div class="field">
+                <label for="last_name">Last Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="last_name"
+                    required
+                    id="last_name"
+                />
+            </div>
+            {{#if error}}<p class="error">{{error}}</p>{{/if}}
+
+            {{!
+            <div>
+                <canvas id="signature-canvas"></canvas>
+                <input type="hidden" name="signature" id="signature" />
+            </div>
+            }}
+
+            <div class="button">
+                <button type="submit">Submit</button>
+            </div>
+        </section>
+
+    </form>
+</main>
