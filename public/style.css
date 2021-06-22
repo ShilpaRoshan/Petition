@@ -1,3 +1,4 @@
+/*
 * {
     box-sizing: border-box;
     margin: 0;
@@ -45,4 +46,8 @@ section {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+*/
+#signature-canvas {
+    border: 1px dotted black;
 }

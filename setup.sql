@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS petitions;
+DROP TABLE IF EXISTS signatures;
 
-CREATE TABLE petitions(
+CREATE TABLE signatures(
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    signatures TEXT NOT NULL CHECK (signatures !='')
+    signature TEXT NOT NULL CHECK (signature !='')
 );
