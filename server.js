@@ -7,7 +7,11 @@ const {
     getSignatures,
     getSignatureById,
     getCount,
+    createUser,
+    getSignatureByUserId,
 } = require("./db");
+
+const { hashPassword, login } = require("./login.js");
 
 const app = express();
 app.engine("handlebars", hb());
@@ -33,6 +37,71 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
+//register page shows up
+app.get("/register", (request, response) => {
+    response.render("register", {
+        title: "Register-Page",
+    });
+});
+//register form after entering the data
+app.post("/register", (request, response) => {
+    //if all the values are not present
+    let info = "This email is taken.Please try again!!";
+    const { first_name, last_name, email, password } = request.body;
+    let error;
+    if (!first_name || !last_name || !email || !password) {
+        error = `Please fill in the details`;
+    }
+    if (error) {
+        response.render("register", { error });
+    }
+    //if present
+    hashPassword(request.body.password).then((password_hash) => {
+        console.log("[password-hash]", password_hash);
+        return createUser({
+            first_name,
+            last_name,
+            email,
+            password_hash,
+        })
+            .then((id) => {
+                console.log("[hi!-id]", id);
+                request.session.id = id;
+                response.redirect("/petition");
+            })
+            .catch((error) => {
+                if (error.constraint === "users_email_key") {
+                    response.render("register", { info });
+                }
+            });
+    });
+});
+
+app.get("/login", (request, response) => {
+    response.render("login", {
+        title: "Login-Page",
+    });
+});
+
+app.post("/login", (request, response) => {
+    const { email, password } = request.body;
+    let error;
+    let noUser = "Please enter valid details!!";
+    if (!email || !password) {
+        error = `Please fill in the details`;
+    }
+    if (error) {
+        response.render("login", { error });
+    }
+    login(request.body.email, request.body.password).then((user) => {
+        if (!user) {
+            response.render("login", { noUser });
+            return;
+        }
+        request.session.user = user;
+        response.redirect("/petition");
+    });
+});
 
 //homepage
 app.get("/petition", (request, response) => {
@@ -47,10 +116,11 @@ app.get("/petition", (request, response) => {
 });
 //Submit form
 app.post("/petition", (request, response) => {
-    const { first_name, last_name, signature } = request.body;
+    const { signature } = request.body;
+    const user_id = request.session.user_id;
     let error;
-    if (!first_name || !last_name || !signature) {
-        error = "Please fill in the details required!!";
+    if (!signature) {
+        error = "Please sign here!!";
     }
     if (error) {
         response.render("petition", { error });
@@ -58,7 +128,7 @@ app.post("/petition", (request, response) => {
     }
     //success
     //save to database
-    createSignature(request.body)
+    createSignature({ user_id, signature })
         .then((id) => {
             request.session.signature_id = id;
             response.redirect("/thankyou");
@@ -83,7 +153,7 @@ app.get("/thankyou", (request, response) => {
     //         //count: getCount(),
     //     });
     // });
-    Promise.all([getSignatureById(signature_id), getCount()])
+    Promise.all([getSignatureByUserId(signature_id), getCount()])
         .then(([signature, count]) => {
             console.log(count);
             response.render("thankyou", {

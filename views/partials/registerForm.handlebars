@@ -1,0 +1,41 @@
+<form action="/register" method="POST">
+    <section>
+
+        <label for="first_name">First Name</label>
+        <input
+            class="text"
+            type="text"
+            name="first_name"
+            required
+            id="first_name"
+        />
+
+        <label for="last_name">Last Name</label>
+        <input
+            class="text"
+            type="text"
+            name="last_name"
+            required
+            id="last_name"
+        />
+
+        <label for="email">E-mail</label>
+        <input class="email" type="email" name="email" required id="email" />
+
+        <label for="password">Password</label>
+        <input
+            class="password"
+            type="password"
+            name="password"
+            required
+            id="password"
+        />
+
+        {{#if error}}<p class="error">{{error}}</p>{{/if}}
+
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </section>
+
+</form>
