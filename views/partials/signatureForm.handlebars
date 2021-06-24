@@ -1,0 +1,50 @@
+{{!--<section class = "signature">
+    {{#if url}}
+       <h4><a href="{{url}}" target = "_blank" class="name">{{first_name}}{{last_name}}</a></h4> 
+        {{#if age}}
+            <span class ="age">{{age}}</span>
+        {{/if}}
+
+        {{#if city}}
+            <span class = "city">{{city}}</span>
+        {{/if}}
+    {{else}}
+        <span class ="name">
+            {{first_name}} {{last_name}}
+        </span>
+        {{#if age}}
+            <span class ="age">{{age}}</span>
+        {{/if}}
+
+        {{#if city}}
+            <span class = "city">{{city}}</span>
+        {{/if}
+
+    {{/if}}
+ 
+</section> --}}
+<article class="signature">
+    {{#if url}}
+        <a href="{{url}}" target="_blank" class="name">
+            {{first_name}}
+            {{last_name}}
+            {{#if age}}
+                <span class="age">{{age}}</span>
+            {{/if}}
+        </a>
+    {{else}}
+        <span class="name">
+            {{first_name}}
+            {{last_name}}
+            {{#if age}}
+                <span class="age">{{age}}</span>
+            {{/if}}
+        </span>
+    {{/if}}
+    {{#if city}}
+        <!-- you pass the hideCity param to the partial -->
+        {{#unless hideCity}}
+            <a href="/signatures/{{toLowerCase city}}" class="city">{{city}}</a>
+        {{/unless}}
+    {{/if}}
+</article>

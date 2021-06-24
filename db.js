@@ -20,9 +20,13 @@ function createSignature({ user_id, signature }) {
 }
 
 function getSignatures() {
-    return db.query("SELECT * FROM signatures").then((result) => {
-        return result.rows;
-    });
+    return db
+        .query(
+            "SELECT first_name, last_name, user_profiles.age, user_profiles.city FROM users JOIN signatures ON signatures.user_id = users.id LEFT JOIN user_profiles ON user_profiles.user_id = users.id WHERE signatures.signature IS NOT NULL"
+        )
+        .then((result) => {
+            return result.rows;
+        });
 }
 function getSignatureById(id) {
     return db
@@ -60,6 +64,16 @@ function getUserByEmail(email) {
             return result.rows[0];
         });
 }
+function createUserProfile({ user_id, age, city, url }) {
+    return db
+        .query(
+            "INSERT INTO (user_id, age, city, url) VALUES($1, $2, $3, $4) RETURNING *",
+            [user_id, age, city, url]
+        )
+        .then((result) => {
+            return result.rows[0];
+        });
+}
 module.exports = {
     createSignature,
     getSignatures,
@@ -68,4 +82,5 @@ module.exports = {
     createUser,
     getUserByEmail,
     getSignatureByUserId,
+    createUserProfile,
 };
