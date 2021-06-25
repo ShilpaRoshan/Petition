@@ -1,4 +1,4 @@
-const { genSalt, hash, compare } = require("bcryptjs");
+const { compare } = require("bcryptjs");
 const { getUserByEmail } = require("./db");
 
 function login(email, password) {
@@ -15,13 +15,7 @@ function login(email, password) {
     });
 }
 //for register form(converting normal password to hashed one)
-function hashPassword(password) {
-    return genSalt().then((salt) => {
-        return hash(password, salt);
-    });
-}
 
 module.exports = {
-    hashPassword,
     login,
 };

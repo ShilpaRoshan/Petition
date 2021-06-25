@@ -33,8 +33,10 @@
         />
 
         {{#if error}}<p class="error">{{error}}</p>{{/if}}
+        {{#if info}} <p class="info">{{info}}</p>{{/if}}
 
         <div>
+            <input type="hidden" name="_csrf" value={{csrfToken}} />
             <button type="submit">Submit</button>
         </div>
         <p>Already registered?<a href="/login">Please click here for login-page</a></p>

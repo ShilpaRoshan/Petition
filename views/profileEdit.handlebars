@@ -1,0 +1,52 @@
+<h2>Edit your profile</h2>
+<form action="/profile/edit" method="POST">
+    <section>
+
+        <label for="first_name">First Name</label>
+        <input
+            class="text"
+            type="text"
+            name="first_name"
+            required
+            id="first_name"
+            value="{{first_name}}"
+        />
+
+        <label for="last_name">Last Name</label>
+        <input
+            class="text"
+            type="text"
+            name="last_name"
+            required
+            id="last_name"
+            value="{{last_name}}"
+        />
+
+        <label for="email">E-mail</label>
+        <input
+            class="email"
+            type="email"
+            name="email"
+            id="email"
+            value="{{email}}"
+        />
+
+        <label for="password">Password</label>
+        <input class="password" type="password" name="password" id="password" />
+        <label for="age">Age</label>
+        <input class="text" type="number" name="age" />
+
+        <label for="city">City</label>
+        <input class="text" type="text" name="city" />
+
+        <label for="url">URL</label>
+        <input class="url" type="url" name="url" />
+
+        <div>
+            <input type="hidden" name="_csrf" value={{csrfToken}} />
+            <button type="submit">Submit</button>
+        </div>
+        <p><a href="/logout">Logout</a></p>
+    </section>
+
+</form>

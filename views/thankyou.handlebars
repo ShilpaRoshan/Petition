@@ -1,2 +1,9 @@
 <h2>Thanks {{signature.first_name}} for signing our petition!!</h2>
-<p><a href="/signatures">See all {{count}} signers</a></p>
+<main>
+    <div class="image-block">
+        <img src="{{signature.signature}}" alt="Signature" class="sign-image" />
+    </div>
+    <p><a href="/signatures">See all {{count}} signers</a></p>
+    <p><a href="/profile/edit">Update the profile</a></p>
+
+</main>

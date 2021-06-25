@@ -3,7 +3,8 @@
     <section>
         <div>
             <canvas id="signature-canvas" width="300" height="90"></canvas>
-            <input type="hidden" name="signature" id="signature" value="TODO" />
+            <input type="hidden" name="signature" id="signature" />
+            <input type="hidden" name="_csrf" value={{csrfToken}} />
         </div>
 
         <div class="button">

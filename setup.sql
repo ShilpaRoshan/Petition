@@ -1,4 +1,6 @@
 --drop existing table
+DROP TABLE IF EXISTS user_profiles;
+--drop existing table
 DROP TABLE IF EXISTS signatures;
 --drop existing table
 DROP TABLE IF EXISTS users;
@@ -17,3 +19,21 @@ CREATE TABLE signatures(
     user_id INTEGER NOT NULL UNIQUE REFERENCES users (id),
     signature TEXT NOT NULL CHECK (signature !='')
 );
+
+CREATE TABLE user_profiles(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL UNIQUE REFERENCES users (id),
+    age INTEGER,
+    city VARCHAR (255),
+    url VARCHAR (255)
+);
+
+
+
+SELECT *, user_profiles.*
+FROM users
+FULL JOIN user_profiles
+ON user_profiles.user_id = users.id;
+
+
+

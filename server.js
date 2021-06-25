@@ -1,43 +1,54 @@
 const express = require("express");
 const hb = require("express-handlebars");
 const cookieSession = require("cookie-session");
+const csurf = require("csurf");
 const path = require("path");
 const {
     createSignature,
     getSignatures,
-    getSignatureById,
     getCount,
     createUser,
     getSignatureByUserId,
     createUserProfile,
+    getSignaturesByCity,
+    getUserInfoById,
+    updateUser,
+    upsertUserProfile,
 } = require("./db");
 
-const { hashPassword, login } = require("./login.js");
+const { login } = require("./login.js");
+const { hashPassword } = require("./hashPassword.js");
 
 const app = express();
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
+app.locals.helpers = {
+    lower: function (arg) {
+        return arg.toLowerCase();
+    },
+};
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(
-    express.urlencoded({
-        extended: false,
-    })
-);
-//app.use(cookieParser());
-// app.use((request, response, next) => {
-//     if (request.cookies.alreadySigned) {
-//         response.redirect("/thankyou");
-//     }
-//     next();
-// });
-
 app.use(
     cookieSession({
         secret: `I'm always angry.`,
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
+
+app.use(
+    express.urlencoded({
+        extended: false,
+    })
+);
+//csurf
+app.use(csurf());
+app.use(function (req, res, next) {
+    res.set("x-frame-options", "deny");
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+
 app.get("/", (request, response) => {
     response.redirect("/register");
 });
@@ -70,8 +81,10 @@ app.post("/register", (request, response) => {
             password_hash,
         })
             .then((user) => {
-                console.log("[hi!-id]", user.id);
+                //console.log("[hi!-id]", user.id);
                 request.session.user_id = user.id;
+                //set csurf
+                response.locals.csrfToken = request.csrfToken();
                 response.redirect("/profile");
             })
             .catch((error) => {
@@ -91,13 +104,13 @@ app.get("/profile", (request, response) => {
 app.post("/profile", (request, response) => {
     const { age, city, url } = request.body;
     const user_id = request.session.user_id;
-    if (!age || !city || !url) {
+    if (!age && !city && !url) {
         response.redirect("/petition");
         return;
     }
     createUserProfile({ user_id, age, city, url })
         .then(() => {
-            console.log("[user-profile]");
+            response.locals.csrfToken = request.csrfToken();
             response.redirect("/petition");
         })
         .catch((error) => {
@@ -130,6 +143,7 @@ app.post("/login", (request, response) => {
             return;
         }
         request.session.user_id = user.id;
+        response.locals.csrfToken = request.csrfToken();
         response.redirect("/petition");
     });
 });
@@ -167,6 +181,7 @@ app.post("/petition", (request, response) => {
     //save to database
     createSignature({ user_id, signature })
         .then(() => {
+            response.locals.csrfToken = request.csrfToken();
             response.redirect("/thankyou");
         })
         .catch((error) => {
@@ -178,7 +193,7 @@ app.post("/petition", (request, response) => {
 app.get("/thankyou", (request, response) => {
     Promise.all([getSignatureByUserId(request.session.user_id), getCount()])
         .then(([signature, count]) => {
-            console.log(count);
+            //console.log(count);
             response.render("thankyou", {
                 signature,
                 count,
@@ -188,14 +203,50 @@ app.get("/thankyou", (request, response) => {
             console.log("[error-in-promises]", error);
         });
 });
+//updating user profile
+app.get("/profile/edit", (request, response) => {
+    const user_id = request.session.user_id;
+    getUserInfoById(user_id).then((user) => {
+        console.log("[user]", user);
+        response.render("profileEdit", {
+            title: "Edit-Profile",
+            ...user,
+        });
+    });
+});
+
+app.post("/profile/edit", (request, response) => {
+    const user_id = request.session.user_id;
+    Promise.all([
+        updateUser({ ...request.body, user_id }),
+        upsertUserProfile({ ...request.body, user_id }),
+    ])
+        .then(() => {
+            response.render("profileEdit", {
+                title: "Edit-Successful",
+            });
+        })
+        .catch((error) => {
+            console.log("[error-while-editing-profile]", error);
+        });
+});
 
 app.get("/signatures", (request, response) => {
     getSignatures().then((signatures) => {
-        console.log("[signatures]", signatures);
+        // console.log("[signatures]", signatures);
         response.render("signatures", {
             title: "Signatures",
             signatures,
         });
+    });
+});
+
+app.get("/signatures/:city", (request, response) => {
+    const city = request.params.city;
+    console.log("[city-parameter]", request.params.city);
+    getSignaturesByCity(city).then((result) => {
+        console.log("[signatures-city]", result);
+        response.render("signatureCity", { result });
     });
 });
 
