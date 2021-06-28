@@ -222,10 +222,11 @@ app.post("/profile/edit", (request, response) => {
     Promise.all([
         updateUser({ ...request.body, user_id }),
         upsertUserProfile({ ...request.body, user_id }),
+        getUserInfoById(user_id),
     ])
         .then(() => {
             response.render("profileEdit", {
-                title: "Edit-Successful",
+                title: "EDIT Success",
                 editLine,
             });
         })
