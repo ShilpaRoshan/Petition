@@ -2,7 +2,7 @@ var c = document.querySelector("#signature-canvas");
 var hiddenField = document.querySelector("#signature");
 var ctx = c.getContext("2d");
 
-ctx.strokeStyle = "black";
+ctx.strokeStyle = "red";
 var prevX = 0,
     prevY = 0,
     currX = 0,

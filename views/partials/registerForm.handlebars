@@ -1,45 +1,70 @@
-<h2>Register here!!</h2>
-<form action="/register" method="POST">
-    <section>
-
-        <label for="first_name">First Name</label>
-        <input
-            class="text"
-            type="text"
-            name="first_name"
-            required
-            id="first_name"
-        />
-
-        <label for="last_name">Last Name</label>
-        <input
-            class="text"
-            type="text"
-            name="last_name"
-            required
-            id="last_name"
-        />
-
-        <label for="email">E-mail</label>
-        <input class="email" type="email" name="email" required id="email" />
-
-        <label for="password">Password</label>
-        <input
-            class="password"
-            type="password"
-            name="password"
-            required
-            id="password"
-        />
-
-        {{#if error}}<p class="error">{{error}}</p>{{/if}}
-        {{#if info}} <p class="info">{{info}}</p>{{/if}}
-
-        <div>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <button type="submit">Submit</button>
+<main>
+    <h1>FSG OUT OF LIVERPOOL!!</h1>
+    <section class="image-conatiner">
+        <div class="photo">
+            <img src="mainLogo.png" alt="logo" class="main-logo" />
         </div>
-        <p>Already registered?<a href="/login">Please click here for login-page</a></p>
     </section>
 
-</form>
+    <form action="/register" method="POST" class="form">
+        <h2>Register here!!</h2>
+        <section>
+            <div class="values-container">
+                <label for="first_name">First Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="first_name"
+                    required
+                    id="first_name"
+                />
+            </div>
+
+            <div class="values-container">
+                <label for="last_name">Last Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="last_name"
+                    required
+                    id="last_name"
+                />
+            </div>
+
+            <div class="values-container">
+                <label for="email">E-mail</label>
+                <input
+                    class="email"
+                    type="email"
+                    name="email"
+                    required
+                    id="email"
+                />
+            </div>
+
+            <div class="values-container">
+                <label for="password">Password</label>
+                <input
+                    class="text"
+                    type="password"
+                    name="password"
+                    required
+                    id="password"
+                />
+            </div>
+
+            {{#if error}}<p class="error">{{error}}</p>{{/if}}
+            {{#if info}} <p class="info">{{info}}</p>{{/if}}
+
+            <div class="button-submit">
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+                <button type="submit" class="submit">Submit</button>
+            </div>
+            <p class="direction">Already registered?<a
+                    href="/login"
+                    class="login"
+                >Login</a></p>
+        </section>
+
+    </form>
+</main>

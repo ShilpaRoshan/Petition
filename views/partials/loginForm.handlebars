@@ -1,25 +1,53 @@
-<h2>Login!</h2>
-<form action="/login" method="POST">
-    <label for="email">E-mail</label>
-    <input class="email" type="email" name="email" required id="email" />
+<main>
+    <h2>Login!</h2>
 
-    <label for="password">Password</label>
-    <input
-        class="password"
-        type="password"
-        name="password"
-        required
-        id="password"
-    />
+    <section>
+        <div class="photo">
+            <img src="mainLogo.png" alt="logo" class="main-logo" />
+        </div>
+    </section>
 
-    {{#if error}}<p class="error">{{error}}</p>{{/if}}
-    {{#if noUser}}<p class="noUser">{{noUser}}</p>{{/if}}
+    <form action="/login" method="POST" class="form">
+        <h2>Login!!</h2>
+        <section class="login-form">
+            <div class="values-container">
+                <label for="email">E-mail</label>
+                <input
+                    class="email"
+                    type="email"
+                    name="email"
+                    required
+                    id="email"
+                />
+            </div>
+            <div class="values-container">
+                <label for="password">Password</label>
+                <input
+                    class="text"
+                    type="password"
+                    name="password"
+                    required
+                    id="password"
+                />
+            </div>
 
-    <div>
-        <input type="hidden" name="_csrf" value={{csrfToken}} />
-        <button type="submit">Submit</button>
-    </div>
-    <p>Not registered?<a href="/register">Please click here..</a></p>
-    <a href="/login">Logout</a>
+            {{#if error}}<p class="error">{{error}}</p>{{/if}}
+            {{#if noUser}}<p class="noUser">{{noUser}}</p>{{/if}}
 
-</form>
+            <div class="button-submit">
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+                <button type="submit" class="submit">Submit</button>
+            </div>
+            <p class="direction">Not Registered?<a
+                    href="/register"
+                    class="login"
+                >Click Here..</a></p>
+            <p class="direction"><a
+                    href="/register"
+                    class="login"
+                >Logout</a></p>
+        </section>
+
+    </form>
+
+</main>

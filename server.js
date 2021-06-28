@@ -14,6 +14,7 @@ const {
     getUserInfoById,
     updateUser,
     upsertUserProfile,
+    deleteSignature,
 } = require("./db");
 
 const { login } = require("./login.js");
@@ -115,7 +116,7 @@ app.post("/profile", (request, response) => {
         })
         .catch((error) => {
             console.log("[error-in-createUserProfile]", error);
-            response.sendStatus(404);
+            response.sendStatus(400);
         });
 });
 
@@ -193,7 +194,7 @@ app.post("/petition", (request, response) => {
 app.get("/thankyou", (request, response) => {
     Promise.all([getSignatureByUserId(request.session.user_id), getCount()])
         .then(([signature, count]) => {
-            //console.log(count);
+            console.log("[signature]", signature);
             response.render("thankyou", {
                 signature,
                 count,
@@ -217,6 +218,7 @@ app.get("/profile/edit", (request, response) => {
 
 app.post("/profile/edit", (request, response) => {
     const user_id = request.session.user_id;
+    let editLine = "Edit-successful!!";
     Promise.all([
         updateUser({ ...request.body, user_id }),
         upsertUserProfile({ ...request.body, user_id }),
@@ -224,10 +226,28 @@ app.post("/profile/edit", (request, response) => {
         .then(() => {
             response.render("profileEdit", {
                 title: "Edit-Successful",
+                editLine,
             });
         })
         .catch((error) => {
             console.log("[error-while-editing-profile]", error);
+        });
+});
+
+app.post("/signature/delete", (request, response) => {
+    const user_id = request.session.user_id;
+    const { signature } = request.body;
+    console.log("[signature-delete-id]", user_id);
+    console.log("[signature]", signature);
+    deleteSignature(user_id)
+        .then((result) => {
+            console.log("[result]", result);
+            //result.signature = "";
+            //request.session.user_id = null;
+            response.redirect("/petition");
+        })
+        .catch((error) => {
+            console.log("[error-delete-signature]", error);
         });
 });
 

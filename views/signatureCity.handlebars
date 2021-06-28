@@ -1,9 +1,19 @@
-<h1>Thanks for signing the petition!!</h1>
 
-<section>
-    <ul>
+<main>
+    <h1>Thanks for signing the petition!!</h1>
+    <section class="image-conatiner">
+        <div class="photo">
+            <img src="/hashtag.jpeg" alt="logo" class="ynwa"/>
+        </div>
+    </section>
+
+
+<section class = "city-signers">
+    <ul class ="signers">
         {{#each result}}
-            <li>{{>signatureForm hideCity = true}}</li>
+            <li class ="signers-list">{{>signatureForm hideCity = true}}</li>
         {{/each}}
     </ul>
 </section>
+<p class = "direction"><a href="/login" class ="logout">Logout</a></p>
+</main>

@@ -69,7 +69,7 @@ function createUserProfile({ user_id, age, city, url }) {
     return db
         .query(
             "INSERT INTO user_profiles (user_id, age, city, url) VALUES($1, $2, $3, $4) RETURNING *",
-            [user_id, age, city, url]
+            [user_id, age || null, city, url]
         )
         .then((result) => {
             return result.rows[0];
@@ -147,6 +147,14 @@ function upsertUserProfile({ user_id, age, city, url }) {
             return result.rows[0];
         });
 }
+
+function deleteSignature(id) {
+    return db
+        .query(`DELETE FROM signatures WHERE user_id = $1 `, [id])
+        .then((result) => {
+            return result.rows[0];
+        });
+}
 module.exports = {
     createSignature,
     getSignatures,
@@ -160,4 +168,5 @@ module.exports = {
     getUserInfoById,
     updateUser,
     upsertUserProfile,
+    deleteSignature,
 };

@@ -1,15 +1,23 @@
-<form action="/petition" method="POST">
-
-    <section>
-        <div>
-            <canvas id="signature-canvas" width="300" height="90"></canvas>
-            <input type="hidden" name="signature" id="signature" />
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-        </div>
-
-        <div class="button">
-            <button type="submit">Submit</button>
+<main>
+    <h1>BLABLABLA!!</h1>
+    <section class="image-conatiner">
+        <div class="photo">
+            <img src="hashtag.jpeg" alt="logo" class="hashtag" />
         </div>
     </section>
+    <form action="/petition" method="POST" id="sign">
+        <h2>Please Sign Here!!</h2>
+        <section class="sign-canvas">
+            <div class="sign-container">
+                <canvas id="signature-canvas"></canvas>
+                <input type="hidden" name="signature" id="signature" />
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+            </div>
 
-</form>
+            <div class="button-submit">
+                <button type="submit" class="submit">Submit</button>
+            </div>
+        </section>
+
+    </form>
+</main>

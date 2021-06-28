@@ -6,21 +6,21 @@
 
         </a>
         {{#if age}}
-            <span class="age">{{age}}</span>
+            <span class="age">({{age}})</span>
         {{/if}}
     {{else}}
         <span class="name">
             {{first_name}}
             {{last_name}}
             {{#if age}}
-                <span class="age">{{age}}</span>
+                <span class="age">({{age}})</span>
             {{/if}}
         </span>
     {{/if}}
 
     {{#if city}}
         {{#unless hideCity}}
-            <a href="/signatures/{{lower city}}" class="city">{{city}}</a>
+            <a href="/signatures/{{lower city}}" class="city-name">{{city}}</a>
         {{/unless}}
     {{/if}}
 

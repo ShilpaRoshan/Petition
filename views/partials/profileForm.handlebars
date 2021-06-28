@@ -1,22 +1,28 @@
-<h2>Please enter more details!!</h2>
-<form action="/profile" method="POST">
-    <section>
+<main class="profile-form">
 
-        <label for="age">Age</label>
-        <input class="text" type="number" name="age" />
+    <form action="/profile" method="POST" class="form">
+        <h2>Please enter more details!!</h2>
+        <section class="profile">
+            <div class="values-container">
+                <label for="age">Age</label>
+                <input class="text" type="number" name="age" />
+            </div>
+            <div class="values-container">
+                <label for="city">City</label>
+                <input class="text" type="text" name="city" />
+            </div>
+            <div class="values-container">
+                <label for="url">URL</label>
+                <input class="text" type="url" name="url" />
 
-        <label for="city">City</label>
-        <input class="text" type="text" name="city" />
+            </div>
 
-        <label for="url">URL</label>
-        <input class="url" type="url" name="url" />
+            <div class="button-submit">
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+                <button type="submit" class="submit">Submit</button>
+            </div>
+            <p class="direction"><a href="/register">Logout</a></p>
+        </section>
 
-        <div>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <button type="submit">Submit</button>
-        </div>
-
-    </section>
-    <p><a href="/login">Logout</a></p>
-
-</form>
+    </form>
+</main>

@@ -1,52 +1,77 @@
-<h2>Edit your profile</h2>
-<form action="/profile/edit" method="POST">
-    <section>
+<main>
 
-        <label for="first_name">First Name</label>
-        <input
-            class="text"
-            type="text"
-            name="first_name"
-            required
-            id="first_name"
-            value="{{first_name}}"
-        />
+    <form action="/profile/edit" method="POST" class="form edit-form">
+        <h2 class="edit-header">Edit your profile here!!</h2>
+        {{#if edit}}<p class="editLine">{{edit}}</p>{{/if}}
+        <section class="edit">
+            <div class="values-container">
+                <label for="first_name">First Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="first_name"
+                    required
+                    id="first_name"
+                    value="{{first_name}}"
+                />
 
-        <label for="last_name">Last Name</label>
-        <input
-            class="text"
-            type="text"
-            name="last_name"
-            required
-            id="last_name"
-            value="{{last_name}}"
-        />
+            </div>
+            <div class="values-container">
+                <label for="last_name">Last Name</label>
+                <input
+                    class="text"
+                    type="text"
+                    name="last_name"
+                    required
+                    id="last_name"
+                    value="{{last_name}}"
+                />
+            </div>
 
-        <label for="email">E-mail</label>
-        <input
-            class="email"
-            type="email"
-            name="email"
-            id="email"
-            value="{{email}}"
-        />
+            <div class="values-container">
+                <label for="email">E-mail</label>
+                <input
+                    class="email"
+                    type="email"
+                    name="email"
+                    id="email"
+                    value="{{email}}"
+                />
+            </div>
 
-        <label for="password">Password</label>
-        <input class="password" type="password" name="password" id="password" />
-        <label for="age">Age</label>
-        <input class="text" type="number" name="age" />
+            <div class="values-container">
+                <label for="password">Password</label>
+                <input
+                    class="text"
+                    type="password"
+                    name="password"
+                    id="password"
+                />
+            </div>
 
-        <label for="city">City</label>
-        <input class="text" type="text" name="city" />
+            <div class="values-container">
+                <label for="age">Age</label>
+                <input class="text" type="number" name="age" value="{{age}}" />
+            </div>
 
-        <label for="url">URL</label>
-        <input class="url" type="url" name="url" />
+            <div class="values-container">
+                <label for="city">City</label>
+                <input class="text" type="text" name="city" value="{{city}}" />
 
-        <div>
-            <input type="hidden" name="_csrf" value={{csrfToken}} />
-            <button type="submit">Submit</button>
-        </div>
-        <p><a href="/logout">Logout</a></p>
-    </section>
+            </div>
 
-</form>
+            <div class="values-container">
+                <label for="url">URL</label>
+                <input class="text" type="url" name="url" value="{{url}}" />
+
+            </div>
+
+            <div class="button-submit">
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+                <button type="submit" class="submit">Submit</button>
+            </div>
+            <p class="direction"><a href="/login" class="login">Logout</a></p>
+        </section>
+
+    </form>
+</main>

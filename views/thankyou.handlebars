@@ -1,9 +1,30 @@
-<h2>Thanks {{signature.first_name}} for signing our petition!!</h2>
 <main>
-    <div class="image-block">
-        <img src="{{signature.signature}}" alt="Signature" class="sign-image" />
-    </div>
-    <p><a href="/signatures">See all {{count}} signers</a></p>
-    <p><a href="/profile/edit">Update the profile</a></p>
+    <h2>Thanks {{signature.first_name}} for signing our petition!!</h2>
+    <section class="image-conatiner">
+        <div class="photo">
+            <img
+                src="{{signature.signature}}"
+                alt="Signature"
+                class="sign-image"
+            />
+        </div>
+    </section>
+    <section class="navigation">
+        <p class="nav-links"><a href="/signatures" class="nav-direction">See all
+                {{count}}
+                signers</a></p>
+        <p class="nav-links"><a
+                href="/profile/edit"
+                class="nav-direction"
+            >Update the profile</a></p>
+        <section class="delete">
+            <form action="/signature/delete" method="POST" class="delete-form">
+                <input type="hidden" name="_csrf" value={{csrfToken}} />
+                <button type="submit" class="delete-button">Delete Signature</button>
+            </form>
+        </section>
+
+    </section>
+    <p class="direction"><a href="/login" class="logout">Logout</a></p>
 
 </main>

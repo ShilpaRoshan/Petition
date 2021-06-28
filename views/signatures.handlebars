@@ -1,8 +1,23 @@
-<section>
-    <p>Thanks to all signers!!</p>
+<main>
+    <h1>Thanks to all signers!!</h1>
+    <section class="image-conatiner">
+        <div class="photo">
+            <img src="fsg.jpg" alt="logo" class="fsg" />
+        </div>
+    </section>
+    <section class = "ul-container">
+    
     <ul>
         {{#each signatures}}
             <li>{{>signatureForm }}</li>
         {{/each}}
+        
     </ul>
+    
 </section>
+<p class="direction"><a
+                    href="/login" class ="logout"
+                >Logout</a></p>
+
+</main>
+
