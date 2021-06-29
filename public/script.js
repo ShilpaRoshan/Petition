@@ -1,5 +1,6 @@
 var c = document.querySelector("#signature-canvas");
 var hiddenField = document.querySelector("#signature");
+var clear = document.querySelector(".clear");
 var ctx = c.getContext("2d");
 
 ctx.strokeStyle = "red";
@@ -24,6 +25,15 @@ c.addEventListener("mouseup", function (event) {
 
 c.addEventListener("mousemove", function (event) {
     drawSignature("mousemove", event);
+});
+
+clear.addEventListener("click", function (event) {
+    event.preventDefault();
+    hiddenField.value = "";
+    var message = confirm("Do you want to clear the signature?");
+    if (message) {
+        ctx.clearRect(0, 0, c.width, c.height);
+    }
 });
 
 function drawSignature(response, event) {

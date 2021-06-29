@@ -24,7 +24,7 @@ const {
 const { checkLogin, checkIfAlreadySigned } = require("./middleware");
 
 const app = express();
-app.use(userRoutes);
+
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 app.locals.helpers = {
@@ -53,6 +53,8 @@ app.use(function (req, res, next) {
     res.locals.csrfToken = req.csrfToken();
     next();
 });
+
+app.use(userRoutes);
 
 app.get("/", (request, response) => {
     response.redirect("/register");
