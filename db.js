@@ -1,13 +1,22 @@
 const spicedPg = require("spiced-pg");
-const { username, password } = require("./secrets.json");
+
 const database = "petitions";
 const { hashPassword } = require("./hashPassword.js");
 
-const db = spicedPg(
-    `postgres:${username}:${password}@localhost:5432/${database}`
-);
+// const db = spicedPg(
+//     `postgres:${username}:${password}@localhost:5432/${database}`
+// );
 
 console.log(`[db] Connecting to ,${database}`);
+
+function getDataBaseURL() {
+    if (process.env.DATABASE_URL) {
+        return process.env.DATABASE_URL;
+    }
+    const { username, password } = require("./secrets.json");
+    return `postgres:${username}:${password}@localhost:5432/${database}`;
+}
+const db = spicedPg(getDataBaseURL());
 
 function createSignature({ user_id, signature }) {
     return db
