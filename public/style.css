@@ -157,7 +157,6 @@ h2 {
 section {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 section.sign-canvas {
     justify-content: center;
