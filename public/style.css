@@ -357,6 +357,7 @@ li {
 }
 .signers {
     width: 300px;
+    height: 40%;
 }
 .signers-list {
     margin: 10px 5px;
