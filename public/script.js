@@ -11,11 +11,10 @@ if (c) {
         currY = 0;
     var flag,
         dotFlag = false;
-    const onCanvasUpdate = () => {
-        const canvasValue = c.toDataURL();
+    function onCanvasUpdate() {
+        var canvasValue = c.toDataURL();
         hiddenField.value = canvasValue;
-        console.log(canvasValue);
-    };
+    }
 
     c.addEventListener("mousedown", function (event) {
         drawSignature("mousedown", event);
