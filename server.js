@@ -172,6 +172,6 @@ app.get("/signatures/:city", checkLogin, (request, response) => {
     });
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log("I am listening!!");
 });
